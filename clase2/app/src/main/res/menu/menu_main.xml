@@ -1,0 +1,42 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ejemplo.mim.com.clase2.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_fingerprint_black_24dp"
+        android:orderInCategory="1"
+        android:title="asd"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_settings5"
+        android:icon="@drawable/ic_fingerprint_black_24dp"
+        android:orderInCategory="2"
+        android:title="asd"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_settings4"
+        android:icon="@drawable/ic_fingerprint_black_24dp"
+        android:orderInCategory="3"
+        android:title="asd"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_settings3"
+        android:icon="@drawable/ic_fingerprint_black_24dp"
+        android:orderInCategory="4"
+        android:title="asd"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_settings2"
+        android:icon="@drawable/ic_fingerprint_black_24dp"
+        android:orderInCategory="100"
+        android:title="asd"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_settings1"
+        android:icon="@drawable/ic_fingerprint_black_24dp"
+        android:orderInCategory="100"
+        android:title="asd"
+        app:showAsAction="ifRoom" />
+
+</menu>
