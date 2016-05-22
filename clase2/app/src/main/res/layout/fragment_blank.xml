@@ -1,0 +1,51 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ejemplo.mim.com.clase2.BlankFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/persona_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/hello_blank_fragment"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/label_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/hello_blank_fragment" />
+
+        <Button
+            android:id="@+id/btn_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="boton" />
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ve a pagina 2" />
+
+        <EditText
+            android:id="@+id/entrada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="escribe dato a enviar" />
+
+        <Button
+            android:id="@+id/manda_dato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="manda dato" />
+
+    </LinearLayout>
+</FrameLayout>
