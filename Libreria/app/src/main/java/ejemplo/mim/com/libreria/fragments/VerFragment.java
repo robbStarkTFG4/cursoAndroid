@@ -6,8 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import java.util.List;
+
+import ejemplo.mim.com.libreria.Holder;
 import ejemplo.mim.com.libreria.R;
+import ejemplo.mim.com.libreria.local.Libro;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +28,7 @@ public class VerFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private List<Libro> bookList;
 
 
     public VerFragment() {
@@ -38,10 +44,10 @@ public class VerFragment extends Fragment {
      * @return A new instance of fragment VerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static VerFragment newInstance(String param1, String param2) {
+    public static VerFragment newInstance(Holder param1, String param2) {
         VerFragment fragment = new VerFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putSerializable(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -51,8 +57,11 @@ public class VerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            bookList = ((Holder) getArguments().getSerializable(ARG_PARAM1)).getBookList();
             mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        for (Libro lib : bookList) {
+            Toast.makeText(getContext(), lib.getNombre(), Toast.LENGTH_LONG).show();
         }
     }
 

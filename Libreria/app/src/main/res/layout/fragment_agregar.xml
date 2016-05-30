@@ -2,17 +2,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context="ejemplo.mim.com.libreria.fragments.AgregarFragment">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-       <LinearLayout
-           android:orientation="vertical"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-       </LinearLayout>
-   </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:textSize="20dp" />
+
+            <EditText
+                android:inputType="text"
+                android:id="@+id/nombre_field_agregar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Autor"
+                android:textSize="20dp" />
+
+            <EditText
+                android:inputType="text"
+                android:id="@+id/autor_field_agregar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Sinopsis"
+                android:textSize="20dp" />
+
+            <EditText
+                android:inputType="text"
+                android:id="@+id/sinopsis_field_agregar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Editorial"
+                android:textSize="20dp" />
+
+            <EditText
+                android:inputType="text"
+                android:id="@+id/editorial_field_agregar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp" />
+
+            <Button
+                android:id="@+id/guardar_agregar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="30dp"
+                android:text="guardar"
+                android:textSize="25dp" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

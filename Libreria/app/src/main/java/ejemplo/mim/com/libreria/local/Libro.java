@@ -1,5 +1,6 @@
 package ejemplo.mim.com.libreria.local;
 
+import java.io.Serializable;
 import java.util.List;
 
 import de.greenrobot.dao.DaoException;
@@ -8,7 +9,7 @@ import de.greenrobot.dao.DaoException;
 /**
  * Entity mapped to table LIBRO.
  */
-public class Libro {
+public class Libro implements Serializable {
 
     private Long id;
     private String nombre;

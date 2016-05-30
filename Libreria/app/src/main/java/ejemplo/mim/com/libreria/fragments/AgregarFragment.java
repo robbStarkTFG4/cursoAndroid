@@ -1,13 +1,22 @@
 package ejemplo.mim.com.libreria.fragments;
 
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import ejemplo.mim.com.libreria.R;
+import ejemplo.mim.com.libreria.local.Libro;
+import ejemplo.mim.com.libreria.util.interfaces.Navigator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +32,8 @@ public class AgregarFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private BookConsumer consumer;
+    private Navigator navigator;
 
 
     public AgregarFragment() {
@@ -60,7 +71,60 @@ public class AgregarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_agregar, container, false);
+        View view = inflater.inflate(R.layout.fragment_agregar, container, false);
+
+        final EditText nombre = (EditText) view.findViewById(R.id.nombre_field_agregar);
+        final EditText autor = (EditText) view.findViewById(R.id.autor_field_agregar);
+        final EditText sinopsis = (EditText) view.findViewById(R.id.sinopsis_field_agregar);
+        final EditText editorial = (EditText) view.findViewById(R.id.editorial_field_agregar);
+
+
+        Button btn = (Button) view.findViewById(R.id.guardar_agregar);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Editable name = nombre.getText();
+                Editable aut = autor.getText();
+                Editable sinop = sinopsis.getText();
+                Editable edito = editorial.getText();
+                if (name.length() > 0 && aut.length() > 0 && sinop.length() > 0 && edito.length() > 0) {
+                    Toast.makeText(getContext(), "guardando...", Toast.LENGTH_SHORT).show();
+                    Libro lib = new Libro();
+                    lib.setNombre(name.toString());
+                    lib.setAutor(aut.toString());
+                    lib.setSinopsis(sinop.toString());
+                    lib.setEditorial(edito.toString());
+                    consumer.consumeBook(lib);
+                    navigator.navigate("dasdas");
+
+                } else {
+                    AlertDialog alert = new AlertDialog.Builder(getContext())
+                            .setMessage("escribe todos los datos").setPositiveButton("ok", null).create();
+                    alert.show();
+                    alert.setCanceledOnTouchOutside(false);
+                }
+            }
+        });
+        return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof BookConsumer) {
+            consumer = (BookConsumer) context;
+            navigator = (Navigator) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        consumer = null;
+    }
+
+    public interface BookConsumer {
+        public void consumeBook(Libro libro);
+    }
 }

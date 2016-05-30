@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import ejemplo.mim.com.libreria.fragments.AgregarFragment;
 import ejemplo.mim.com.libreria.fragments.CarritoFragment;
@@ -17,12 +18,11 @@ import ejemplo.mim.com.libreria.local.Orden;
 import ejemplo.mim.com.libreria.util.interfaces.Navigator;
 
 
-public class MainActivity extends AppCompatActivity implements Navigator {
+public class MainActivity extends AppCompatActivity implements Navigator, AgregarFragment.BookConsumer {
     // database objects
     private SQLiteDatabase db;
     private DaoMaster master;
     public DaoSession session;
-    private int currentPortablePos;
 
     //End database objects
     @Override
@@ -30,36 +30,15 @@ public class MainActivity extends AppCompatActivity implements Navigator {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       /* try {
+        try {
             DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(this, "mimDb14", null);
             db = openHelper.getWritableDatabase();
             master = new DaoMaster(db);
             session = master.newSession();
 
-            Libro libro = new Libro();
-            libro.setAutor("asdasdas");
-            libro.setEditorial("dasdas");
-            libro.setNombre("dasdasda");
-            libro.setSinopsis("dasdasdas");
-
-            session.getLibroDao().insert(libro);
-
-            Log.d("ID_LIBRO", libro.getId().toString());
-
-
-            Orden or = new Orden();
-            or.setCantidad(5);
-            or.setCosto(12);
-            or.setTotal(5 * 12);
-            or.setLibro(libro);
-
-            session.getOrdenDao().insert(or);
-
-            Log.d("ID_ORDEN", or.getId().toString());
-
         } catch (Exception e) {
             Log.d("d", e.getMessage());
-        }*/
+        }
         launchMenuFragment();
     }
 
@@ -73,14 +52,26 @@ public class MainActivity extends AppCompatActivity implements Navigator {
         FragmentManager manager = getSupportFragmentManager();
         switch (name) {
             case "agregar":
-                manager.beginTransaction().replace(R.id.main_content, AgregarFragment.newInstance(null,null)).addToBackStack(null).commit();
+                manager.beginTransaction().replace(R.id.main_content, AgregarFragment.newInstance(null, null), "asd").addToBackStack(null).commit();
                 break;
             case "ver":
-                manager.beginTransaction().replace(R.id.main_content, VerFragment.newInstance(null,null)).addToBackStack(null).commit();
+                Holder holder = new Holder();
+                holder.setBookList(session.getLibroDao().loadAll());
+                manager.beginTransaction().replace(R.id.main_content, VerFragment.newInstance(holder, null)).addToBackStack(null).commit();
                 break;
             case "carrito":
-                manager.beginTransaction().replace(R.id.main_content, CarritoFragment.newInstance(null,null)).addToBackStack(null).commit();
+                manager.beginTransaction().replace(R.id.main_content, CarritoFragment.newInstance(null, null)).addToBackStack(null).commit();
+                break;
+            default:
+                manager.beginTransaction().replace(R.id.main_content, MenuFragment.newInstance(null, null)).commit();
+                manager.beginTransaction().remove(manager.findFragmentByTag("asd"));
                 break;
         }
+    }
+
+    @Override
+    public void consumeBook(Libro libro) {
+        session.getLibroDao().insert(libro);
+        Toast.makeText(this, String.valueOf(libro.getId()), Toast.LENGTH_LONG).show();
     }
 }
