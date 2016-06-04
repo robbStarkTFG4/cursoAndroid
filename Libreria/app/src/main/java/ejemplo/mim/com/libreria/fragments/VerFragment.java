@@ -1,6 +1,7 @@
 package ejemplo.mim.com.libreria.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ejemplo.mim.com.libreria.util.interfaces.FragmentLink;
 import ejemplo.mim.com.libreria.util.interfaces.Holder;
 import ejemplo.mim.com.libreria.R;
 import ejemplo.mim.com.libreria.local.Libro;
@@ -21,7 +23,7 @@ import ejemplo.mim.com.libreria.local.Libro;
  * Use the {@link VerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VerFragment extends Fragment {
+public class VerFragment extends Fragment implements FragmentLink {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,6 +38,7 @@ public class VerFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ChoosenBook choosen;
 
     public VerFragment() {
         // Required empty public constructor
@@ -66,9 +69,9 @@ public class VerFragment extends Fragment {
             bookList = ((Holder) getArguments().getSerializable(ARG_PARAM1)).getBookList();
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        for (Libro lib : bookList) {
+        /*for (Libro lib : bookList) {
             Toast.makeText(getContext(), lib.getNombre(), Toast.LENGTH_LONG).show();
-        }
+        }*/
     }
 
     @Override
@@ -81,10 +84,33 @@ public class VerFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new LibrosAdapter(bookList);
+        mAdapter = new LibrosAdapter(bookList, getContext(), this);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
     }
 
+    @Override
+    public void linkPosition(int pos) {
+        // Toast.makeText(getContext(), "posicion: " + pos, Toast.LENGTH_SHORT).show();
+        choosen.sendBook(bookList.get(pos));
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ChoosenBook) {
+            choosen = (ChoosenBook) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        choosen = null;
+    }
+
+    public interface ChoosenBook {
+        public void sendBook(Libro libro);
+    }
 }

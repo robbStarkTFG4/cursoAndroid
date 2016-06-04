@@ -7,20 +7,27 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.List;
+
 import ejemplo.mim.com.libreria.fragments.AgregarFragment;
 import ejemplo.mim.com.libreria.fragments.CarritoFragment;
+import ejemplo.mim.com.libreria.fragments.LibrosAdapter;
 import ejemplo.mim.com.libreria.fragments.MenuFragment;
 import ejemplo.mim.com.libreria.fragments.VerFragment;
 import ejemplo.mim.com.libreria.local.DaoMaster;
 import ejemplo.mim.com.libreria.local.DaoSession;
 import ejemplo.mim.com.libreria.local.Libro;
+import ejemplo.mim.com.libreria.local.LibroDao;
 import ejemplo.mim.com.libreria.util.interfaces.Holder;
 import ejemplo.mim.com.libreria.util.interfaces.Navigator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class MainActivity extends AppCompatActivity implements Navigator, AgregarFragment.BookConsumer {
+public class MainActivity extends AppCompatActivity implements Navigator, AgregarFragment.BookConsumer, VerFragment.ChoosenBook {
     // database objects
     private SQLiteDatabase db;
     private DaoMaster master;
@@ -37,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements Navigator, Agrega
             db = openHelper.getWritableDatabase();
             master = new DaoMaster(db);
             session = master.newSession();
-
         } catch (Exception e) {
             Log.d("d", e.getMessage());
         }
@@ -47,6 +53,20 @@ public class MainActivity extends AppCompatActivity implements Navigator, Agrega
                 .baseUrl(Service.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        Service serv = retrofit.create(Service.class);
+        serv.getLibros().enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Toast.makeText(MainActivity.this, "exito " + call.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable throwable) {
+                Toast.makeText(MainActivity.this, "hubo algun error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void launchMenuFragment() {
@@ -80,5 +100,10 @@ public class MainActivity extends AppCompatActivity implements Navigator, Agrega
     public void consumeBook(Libro libro) {
         session.getLibroDao().insert(libro);
         Toast.makeText(this, String.valueOf(libro.getId()), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void sendBook(Libro libro) {
+        Toast.makeText(this, libro.getEditorial(), Toast.LENGTH_SHORT).show();
     }
 }
