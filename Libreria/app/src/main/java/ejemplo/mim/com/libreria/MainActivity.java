@@ -14,8 +14,10 @@ import ejemplo.mim.com.libreria.fragments.VerFragment;
 import ejemplo.mim.com.libreria.local.DaoMaster;
 import ejemplo.mim.com.libreria.local.DaoSession;
 import ejemplo.mim.com.libreria.local.Libro;
-import ejemplo.mim.com.libreria.local.Orden;
+import ejemplo.mim.com.libreria.util.interfaces.Holder;
 import ejemplo.mim.com.libreria.util.interfaces.Navigator;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity implements Navigator, AgregarFragment.BookConsumer {
@@ -40,6 +42,11 @@ public class MainActivity extends AppCompatActivity implements Navigator, Agrega
             Log.d("d", e.getMessage());
         }
         launchMenuFragment();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Service.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     private void launchMenuFragment() {

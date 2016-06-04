@@ -3,6 +3,8 @@ package ejemplo.mim.com.libreria.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import ejemplo.mim.com.libreria.Holder;
+import ejemplo.mim.com.libreria.util.interfaces.Holder;
 import ejemplo.mim.com.libreria.R;
 import ejemplo.mim.com.libreria.local.Libro;
 
@@ -30,6 +32,10 @@ public class VerFragment extends Fragment {
     private String mParam2;
     private List<Libro> bookList;
 
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public VerFragment() {
         // Required empty public constructor
@@ -69,7 +75,16 @@ public class VerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ver, container, false);
+        View view = inflater.inflate(R.layout.fragment_ver, container, false);
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.libros);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new LibrosAdapter(bookList);
+        mRecyclerView.setAdapter(mAdapter);
+
+        return view;
     }
 
 }

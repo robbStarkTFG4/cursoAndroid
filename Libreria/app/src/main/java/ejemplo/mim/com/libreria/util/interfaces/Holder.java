@@ -1,4 +1,4 @@
-package ejemplo.mim.com.libreria;
+package ejemplo.mim.com.libreria.util.interfaces;
 
 import java.io.Serializable;
 import java.util.List;
