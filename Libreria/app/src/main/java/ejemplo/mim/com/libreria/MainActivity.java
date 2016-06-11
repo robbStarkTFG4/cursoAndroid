@@ -55,14 +55,16 @@ public class MainActivity extends AppCompatActivity implements Navigator, Agrega
                 .build();
 
         Service serv = retrofit.create(Service.class);
-        serv.getLibros().enqueue(new Callback<String>() {
+        serv.getLibros().enqueue(new Callback<List<ejemplo.mim.com.libreria.remote.Libro>>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Toast.makeText(MainActivity.this, "exito " + call.toString(), Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<List<ejemplo.mim.com.libreria.remote.Libro>> call, Response<List<ejemplo.mim.com.libreria.remote.Libro>> response) {
+                for (ejemplo.mim.com.libreria.remote.Libro lib : response.body()) {
+                    Toast.makeText(MainActivity.this, lib.getNombre(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable throwable) {
+            public void onFailure(Call<List<ejemplo.mim.com.libreria.remote.Libro>> call, Throwable throwable) {
                 Toast.makeText(MainActivity.this, "hubo algun error", Toast.LENGTH_SHORT).show();
             }
         });

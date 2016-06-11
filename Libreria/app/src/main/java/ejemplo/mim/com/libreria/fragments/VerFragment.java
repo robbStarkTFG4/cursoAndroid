@@ -85,6 +85,7 @@ public class VerFragment extends Fragment implements FragmentLink {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new LibrosAdapter(bookList, getContext(), this);
+       // mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
